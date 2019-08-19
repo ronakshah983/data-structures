@@ -41,8 +41,19 @@ class BinarySearchTree:
 	# def delete(self,data):
 	# 	pass
 
-	# def search(self,data):
-	# 	pass
+	def search(self,data):
+		count = 0
+		current = self.root
+		while True:
+			if current.data == data or (current.left is None and current.right is None):
+				break
+			elif current.data < data:
+				current = current.right
+			elif current.data > data:
+				current = current.left
+			count+=1
+
+		return count
 
 	def pre_order(self):
 		return self.pre_order_traverse(self.root)
@@ -94,18 +105,21 @@ def main():
 #	data = [10,7,12,14,11,17,13,20,4,2,3,1]
 	data = [i for i in range(MIN,MAX)]
 	binary_search_tree = BinarySearchTree()
-#	random.shuffle(data)
-#	print(data)
+	random.shuffle(data)
+
 	start = time.time()
 	for i in data:
 		binary_search_tree.insert(i)
 	end = time.time()
 	print("Total insert time :",end-start)
-#	print(binary_search_tree.pre_order())
-#	print(binary_search_tree.in_order())
-#	print(binary_search_tree.post_order())
-#	print(binary_search_tree.minimum())
-#	print(binary_search_tree.maximum())
+	comparisons = 0
+	start = time.time()
+	for i in range(MIN,MAX):
+		comparisons+=binary_search_tree.search(i)
+	end = time.time()
+	print("Average search comparisons : ",comparisons/(MAX-1))
+	print("Average search time: ",end-start)
+
 
 if __name__ == '__main__':
 	main()
